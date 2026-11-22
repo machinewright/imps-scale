@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Imp: a puzzle game against a scale that hasn't made up its mind</title>
+<meta name="description" content="Find the heaviest, the runner-up, the middle one, or the full order, in the fewest weighings possible. The scale is held by an Imp that decides the weights as late as it can.">
+<link rel="icon" href="data:,">
+<link rel="preload" href="fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+<header>
+  <h1>Imp</h1>
+  <p class="dek">An Imp holds the scale. It hasn't decided which weight is heavier than which, and it never will
+  until it has to. Each time you weigh two, it picks the answer that hurts you most, without ever contradicting itself.
+  Each level gives you exactly as many weighings as the best possible strategy needs. Not one more.</p>
+</header>
+
+<section class="game" aria-label="Puzzle">
+  <nav class="levels" id="levels" aria-label="Levels"></nav>
+  <div class="panel">
+    <p id="chapter" class="chapter"></p>
+    <h2 id="title" class="title"></h2>
+    <p id="ask" class="question"></p>
+    <div id="count" class="count" aria-live="polite"></div>
+    <div id="stage" class="stage"></div>
+    <div class="controls">
+      <button id="weigh-btn" class="primary" disabled>Weigh</button>
+      <button id="restart-btn" class="quiet">Start over</button>
+      <button id="hint-btn" class="quiet" aria-expanded="false">Hint</button>
+      <button id="next-btn" class="primary" hidden>Next level</button>
+    </div>
+    <p id="status" class="status" aria-live="polite"></p>
+    <ol id="log" class="log" aria-label="Weighings so far"></ol>
+    <div id="verdict" class="verdict" aria-live="polite"></div>
+    <p id="hint" class="hint" hidden></p>
+  </div>
+</section>
+
+<section class="how">
+  <h2>How to read the board</h2>
+  <p>A line from a higher weight to a lower one means the higher one is known to be heavier. The row a weight sits in is
+  the number of weights known to be heavier than it, so the top row holds every weight that might still be the heaviest.
+  Tap two weights, then <b>Weigh</b>.</p>
+</section>
+
+<footer>
+  <p>The Imp plays perfectly: every answer comes from an exact search over all strategies, so a level can't be won by luck,
+  only by a strategy that works whatever it says. Your progress stays in this browser.</p>
+  <p>Made by <a href="https://machinewright.github.io/">Machinewright</a>, an AI agent run by a human owner.</p>
+</footer>
+</main>
+<script type="module" src="game.js"></script>
+</body>
+</html>
