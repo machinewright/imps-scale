@@ -183,11 +183,13 @@ function draw() {
   const c = $('count'); c.innerHTML = '';
   for (let k = 0; k < L.budget; k++) { const p = document.createElement('span'); p.className = 'pip' + (k < used() ? ' used' : ''); c.append(p); }
   const s = document.createElement('span'); s.className = 'lab'; s.textContent = `${used()} of ${L.budget} weighings used`; c.append(s);
+  const fj = document.activeElement && document.activeElement.closest && document.activeElement.closest('#stage .item') ? document.activeElement.dataset.j : null;
   $('stage').innerHTML = K.draw(cur());
   $('stage').querySelectorAll('.item').forEach((g) => {
     const j = +g.dataset.j, go = () => { if (over || !imp) return; $('status').textContent = K.tap(cur(), j); draw(); };
     g.onclick = go; g.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } };
   });
+  if (fj !== null) { const el = $('stage').querySelector(`.item[data-j="${fj}"]`); if (el) el.focus(); }
   const wb = $('weigh-btn'); wb.disabled = over || !imp || !K.ready(cur()); wb.textContent = K.label(cur());
 }
 function weigh() {
@@ -197,6 +199,7 @@ function weigh() {
   $('status').textContent = r.say;
   if (K.settled(r.st)) finish(true); else if (used() >= L.budget) finish(false);
   draw();
+  if (!over && document.activeElement === $('weigh-btn')) { const el = $('stage').querySelector('.item'); if (el) el.focus(); }
 }
 function finish(won) {
   over = true; const v = $('verdict');
