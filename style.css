@@ -32,11 +32,10 @@ svg .item { cursor: pointer; }
 svg .item:focus { outline: none; }
 svg .item .ring { fill: #fff; stroke: #3a404c; stroke-width: 2; }
 svg .item:focus-visible .ring { stroke: #4a90d9; stroke-width: 4; }
-svg .item.sel .ring { fill: #fdf1dc; stroke: #c98a2b; stroke-width: 4; }
+svg .item.sel .ring { fill: #fdf1dc; stroke: #a8650f; stroke-width: 4; }
 svg .item.answer .ring { fill: #1d7a48; stroke: #11502e; }
 svg .item.answer .lbl { fill: #fff; }
 svg .lbl { font: 700 16px var(--sans); text-anchor: middle; dominant-baseline: central; pointer-events: none; fill: var(--ink); }
-svg .rowlab { font: 500 11px var(--sans); fill: #9aa0aa; dominant-baseline: central; }
 svg .rowline { stroke: #f0ebe0; stroke-width: 1; }
 button { font: 600 14px/1 var(--sans); background: #fff; color: var(--ink); border: 1px solid #d3cab6; border-radius: 999px;
   padding: 9px 15px; cursor: pointer; box-shadow: 0 1px 0 rgba(31,36,48,.06); }
@@ -60,13 +59,12 @@ footer { margin-top: 28px; font-size: 14px; color: var(--muted); }
 @media (max-width: 480px) { main { padding: 24px 12px 56px; } h1 { font-size: 2em; } .dek { font-size: 1.02em; } .panel { padding: 16px 12px; } .stage { padding: 4px; } .log { columns: 1; } .levels button { min-width: 0; padding: 6px 8px; font-size: 12.5px; } }
 .levels .sep { width: 10px; }
 svg.coins .pan { fill: #f6f1e6; stroke: #d3cab6; }
-svg.coins .panlab { font: 600 12px var(--sans); fill: #9aa0aa; text-anchor: middle; dominant-baseline: central; }
+svg.coins .panlab { font: 600 12px var(--sans); fill: #5f6670; text-anchor: middle; dominant-baseline: central; }
 svg .coin .ring { fill: #f7e7b8; stroke: #a8650f; }
 svg .coin.st-h .ring { fill: #fbd9c9; stroke: #b4552d; }
 svg .coin.st-l .ring { fill: #d6e6f7; stroke: #3f7bbf; }
 svg .coin.st-g .ring { fill: #eceae4; stroke: #b5b0a5; }
-svg .coin.st-g .lbl { fill: #9aa0aa; }
+svg .coin.st-g .lbl { fill: #646b78; }
 svg .coin.onL .ring, svg .coin.onR .ring { stroke-width: 4; stroke: #1f2430; }
-svg .coin .mark { font: 600 10.5px var(--sans); text-anchor: middle; dominant-baseline: central; fill: #646b78; pointer-events: none; }
-svg .coin .side { font: 700 12px var(--sans); text-anchor: middle; fill: #1f2430; pointer-events: none; }
+svg .coin .mark { font: 600 10.5px var(--sans); text-anchor: middle; dominant-baseline: central; fill: #4a505c; pointer-events: none; }
 .legend { font-size: 13.5px; color: var(--muted); margin: 0 0 8px; max-width: 680px; }

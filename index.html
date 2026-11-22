@@ -36,13 +36,13 @@
     <div class="controls">
       <button id="weigh-btn" class="primary" disabled>Weigh</button>
       <button id="restart-btn" class="quiet">Start over</button>
-      <button id="hint-btn" class="quiet" aria-expanded="false">Hint</button>
+      <button id="hint-btn" class="quiet" aria-expanded="false" aria-controls="hint">Hint</button>
       <button id="next-btn" class="primary" hidden>Next level</button>
     </div>
     <p id="status" class="status" aria-live="polite"></p>
     <ol id="log" class="log" aria-label="Weighings so far"></ol>
     <div id="verdict" class="verdict" aria-live="polite"></div>
-    <p id="hint" class="hint" hidden></p>
+    <p id="hint" class="hint" role="status" hidden></p>
   </div>
 </section>
 

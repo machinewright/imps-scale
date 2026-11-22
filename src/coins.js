@@ -24,7 +24,7 @@ export function outcomes(s, L, R) {
 }
 
 function* splits(s) {
-  // every way to choose left and right pans of equal size (left <= right lexicographically, by symmetry)
+  // every way to choose left and right pans of equal size (both orientations; symmetry is not exploited)
   for (let lu = 0; lu <= s.u; lu++) for (let ru = 0; ru <= s.u - lu; ru++)
   for (let lh = 0; lh <= s.h; lh++) for (let rh = 0; rh <= s.h - lh; rh++)
   for (let ll = 0; ll <= s.l; ll++) for (let rl = 0; rl <= s.l - ll; rl++) {

@@ -1,7 +1,7 @@
 import { LEVELS, goalOf } from './src/levels.js';
 import { empty, add, known, above, pc } from './src/poset.js';
 import { Imp, orders } from './src/imp.js';
-import { CoinImp, applyOutcome, stateOf, hyps, start as coinStart } from './src/coins.js';
+import { CoinImp, applyOutcome, stateOf, start as coinStart } from './src/coins.js';
 
 const $ = (id) => document.getElementById(id);
 const NAMES = 'ABCDEFGH';
@@ -70,7 +70,7 @@ const Weights = {
     if (i >= 0) st.sel.splice(i, 1); else { if (st.sel.length === 2) st.sel.shift(); st.sel.push(j); }
     if (st.sel.length === 2 && known(st.gt, st.sel[0], st.sel[1])) {
       const [a, b] = (st.gt[st.sel[0]] >> st.sel[1]) & 1 ? st.sel : [st.sel[1], st.sel[0]];
-      return `You already know that: ${chain(st.gt, a, b)}. Weighing them would tell you nothing.`;
+      return `You already know that: ${chain(st.gt, a, b)}. Weighing them would tell you nothing. Tap either one to put it back.`;
     }
     return st.sel.length === 2 ? '' : this.idle;
   },
@@ -110,7 +110,8 @@ const Coins = {
     const [a, b] = this.bestIdx(st); return `coins ${a.map((i) => i + 1).join(' ')} against ${b.map((i) => i + 1).join(' ')}`;
   },
   bestIdx(st) {
-    const [Lc, Rc] = imp.best(this.S(st)); const pool = { u: [], h: [], l: [], g: [] };
+    const pick = imp.best(this.S(st)); if (!pick) return [[], []];
+    const [Lc, Rc] = pick; const pool = { u: [], h: [], l: [], g: [] };
     st.status.forEach((s, i) => pool[s].push(i));
     const take = (c) => Object.entries(c).flatMap(([k, m]) => pool[k].splice(0, m));
     return [take(Lc), take(Rc)];
@@ -124,15 +125,15 @@ const Coins = {
   },
   draw(st) {
     const n = st.status.length, per = n > 7 ? Math.ceil(n / 2) : n, W = Math.max(300, per * 62), rows = Math.ceil(n / per);
-    const H = 80 + rows * 64;
+    const H = 84 + rows * 64;
     let s = `<svg class="board coins" viewBox="0 0 ${W} ${H}" role="group" aria-label="Coins">`;
     const [pl, pr] = this.sides(st);
-    s += `<rect class="pan" x="${W * 0.04}" y="8" width="${W * 0.42}" height="46" rx="10"/>${pl.length ? '' : `<text class="panlab" x="${W * 0.25}" y="31">left pan</text>`}`;
-    s += `<rect class="pan" x="${W * 0.54}" y="8" width="${W * 0.42}" height="46" rx="10"/>${pr.length ? '' : `<text class="panlab" x="${W * 0.75}" y="31">right pan</text>`}`;
+    s += `<rect class="pan" x="${W * 0.04}" y="8" width="${W * 0.42}" height="46" rx="10"/><text class="panlab" x="${W * 0.25}" y="${pl.length ? 66 : 31}">left pan</text>`;
+    s += `<rect class="pan" x="${W * 0.54}" y="8" width="${W * 0.42}" height="46" rx="10"/><text class="panlab" x="${W * 0.75}" y="${pr.length ? 66 : 31}">right pan</text>`;
     const settledNow = this.settled(st);
     const [onl, onr] = this.sides(st);
     st.status.forEach((stt, i) => {
-      const r = Math.floor(i / per), c = i % per; let cx = (W / per) * (c + 0.5), cy = 96 + r * 64;
+      const r = Math.floor(i / per), c = i % per; let cx = (W / per) * (c + 0.5), cy = 100 + r * 64;
       if (st.pan[i]) { const list = st.pan[i] === 1 ? onl : onr, k = list.indexOf(i), m = list.length;
         const step = Math.min(40, (W * 0.4) / m), x0 = (st.pan[i] === 1 ? W * 0.25 : W * 0.75) - (step * (m - 1)) / 2;
         cx = x0 + k * step; cy = 31; }
@@ -157,7 +158,7 @@ function renderLevels() {
   LEVELS.forEach((lv, i) => {
     if (ch !== null && lv.chapter !== ch && (lv.kind || 'w') !== (LEVELS[i - 1].kind || 'w')) { const sp = document.createElement('span'); sp.className = 'sep'; nav.append(sp); }
     ch = lv.chapter;
-    const b = document.createElement('button'); b.textContent = i + 1; b.title = lv.title;
+    const b = document.createElement('button'); b.textContent = i + 1; b.title = lv.title; b.setAttribute('aria-label', `Level ${i + 1}: ${lv.title}`);
     if (solved.has(lv.id)) b.classList.add('solved');
     if (lv === L) b.setAttribute('aria-current', 'true');
     b.onclick = () => load(i); nav.append(b);
