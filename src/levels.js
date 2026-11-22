@@ -73,10 +73,6 @@ export const LEVELS = [
     ask: 'Find the middle weight of seven (three heavier, three lighter) in 10 weighings.',
     hint: 'A weight with four known lighter, or four known heavier, can\'t be the middle one.',
     why: 'The exhaustive search behind the Imp proves 9 weighings never suffice. With five weights the middle took 6; two more weights cost four more weighings.' },
-  { id: 'x_r14_7', chapter: 'Expert', title: 'Top and middle', n: 7, goal: 'ranks:1,4', budget: 11,
-    ask: 'Find the heaviest and the middle weight of seven, in 11 weighings. The middle alone takes 10.',
-    hint: 'Whatever you do to find the middle one, the heaviest should come out of it almost for free. Almost.',
-    why: 'An exhaustive search proves 10 never suffices: finding the heaviest on top of the middle costs exactly one more weighing.' },
 ];
 export const goalOf = (lv) => {
   if (lv.goal === 'top3') return top(3);

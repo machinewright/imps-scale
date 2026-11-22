@@ -45,5 +45,11 @@ with sync_playwright() as p:
         if pg.locator('#safe-btn').count(): pg.locator('#safe-btn').click()
         print(w, 'bad play:', pg.locator('#verdict').inner_text()[:300].replace('\n', ' | '))
         pg.screenshot(path=f'{OUT}/lost3-{w}.png', full_page=True)
+        pg.locator('#retry-btn').click()
+        print(w, 'after retry:', pg.locator('#status').inner_text(), '| log', pg.locator('#log li').count())
+        while not pg.locator('#verdict .won, #verdict .lost').count():
+            a, c = pg.evaluate("() => window.__best()")
+            pg.locator(f'.item[data-j="{a}"]').click(); pg.locator(f'.item[data-j="{c}"]').click(); pg.locator('#weigh-btn').click()
+        print(w, 'retry result:', 'won' if pg.locator('#verdict .won').count() else 'LOST')
     b.close()
 print('errors:', errors)

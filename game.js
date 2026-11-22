@@ -126,8 +126,9 @@ const Coins = {
     const n = st.status.length, per = n > 7 ? Math.ceil(n / 2) : n, W = Math.max(300, per * 62), rows = Math.ceil(n / per);
     const H = 80 + rows * 64;
     let s = `<svg class="board coins" viewBox="0 0 ${W} ${H}" role="group" aria-label="Coins">`;
-    s += `<rect class="pan" x="${W * 0.04}" y="8" width="${W * 0.42}" height="46" rx="10"/><text class="panlab" x="${W * 0.25}" y="31">left pan</text>`;
-    s += `<rect class="pan" x="${W * 0.54}" y="8" width="${W * 0.42}" height="46" rx="10"/><text class="panlab" x="${W * 0.75}" y="31">right pan</text>`;
+    const [pl, pr] = this.sides(st);
+    s += `<rect class="pan" x="${W * 0.04}" y="8" width="${W * 0.42}" height="46" rx="10"/>${pl.length ? '' : `<text class="panlab" x="${W * 0.25}" y="31">left pan</text>`}`;
+    s += `<rect class="pan" x="${W * 0.54}" y="8" width="${W * 0.42}" height="46" rx="10"/>${pr.length ? '' : `<text class="panlab" x="${W * 0.75}" y="31">right pan</text>`}`;
     const settledNow = this.settled(st);
     const [onl, onr] = this.sides(st);
     st.status.forEach((stt, i) => {
@@ -214,9 +215,18 @@ function finish(won) {
     v.innerHTML = `<p class="lost">Out of weighings, and it isn't settled yet.</p>
       <p>Weighing ${k} (${h.what}) was the slip. Before it you could still finish in time, whatever the Imp said.
       After its answer the Imp could hold out for ${h.need} more weighing${h.need > 1 ? 's' : ''}, and you had ${L.budget - k} left.</p>
-      <p><button id="safe-btn" class="quiet">Show a safe weighing for that moment</button> <span id="safe"></span></p>`;
+      <p><button id="retry-btn" class="primary">${k > 1 ? `Go back to just before weighing ${k}` : 'Start again'}</button>
+      <button id="safe-btn" class="quiet">Show a safe weighing for that moment</button> <span id="safe"></span></p>`;
+    $('retry-btn').onclick = () => rewind(k - 1);
     $('safe-btn').onclick = () => { $('safe').textContent = `Safe there: ${K.safe(prev.st)}.`; };
   }
+}
+function rewind(k) { // keep the first k weighings (all still safe) and play on from there
+  hist = hist.slice(0, k + 1); over = false; $('verdict').innerHTML = '';
+  const log = $('log'); while (log.children.length > k) log.lastElementChild.remove();
+  const st = cur(); if (st.sel) st.sel = []; if (st.pan) st.pan = st.pan.map(() => 0);
+  $('status').textContent = (k ? `Back to just after weighing ${k}.` : 'Back to the start.') + ' From here a safe plan still exists, whatever the Imp says.';
+  draw();
 }
 window.__state = () => cur();
 window.__best = () => K === Coins ? Coins.bestIdx(cur()) : imp.best(cur().gt).pairs[0];

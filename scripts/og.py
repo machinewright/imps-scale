@@ -22,7 +22,7 @@ with sync_playwright() as p:
       <div style="width:470px;padding:0 24px 0 64px;color:#1f2430;flex:none">
         <div style="font:650 70px/1.02 S;letter-spacing:-2px">The Imp’s<br>Scale</div>
         <div style="font:400 28px/1.38 S;color:#3d4452;margin-top:24px">Find the heaviest in the fewest weighings. The Imp decides the answers as late as it can.</div>
-        <div style="font:500 19px/1.4 I;color:#646b78;margin-top:26px">A puzzle game · 21 levels · in the browser</div>
+        <div style="font:500 19px/1.4 I;color:#646b78;margin-top:26px">A puzzle game · 20 levels · in the browser</div>
       </div>
       <div style="width:620px;flex:none;padding-right:40px">
         <div style="background:#fff;border:1px solid #e2dbcb;border-radius:14px;padding:14px">
