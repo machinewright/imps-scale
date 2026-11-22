@@ -24,13 +24,17 @@ with sync_playwright() as p:
             pg.goto(URL + f'#{i+1}'); pg.reload(); pg.wait_for_function("!document.getElementById('status').textContent.includes('thinking')", timeout=60000)
             steps = 0
             while not pg.locator('#verdict .won, #verdict .lost').count():
-                a, c = pg.evaluate(BEST)
-                pg.locator(f'.item[data-j="{a}"]').click(); pg.locator(f'.item[data-j="{c}"]').click()
+                best = pg.evaluate("() => window.__best()")
+                if isinstance(best[0], list):  # coins: left list, right list
+                    for j in best[0]: pg.locator(f'.item[data-j="{j}"]').click()
+                    for j in best[1]: pg.locator(f'.item[data-j="{j}"]').click(); pg.locator(f'.item[data-j="{j}"]').click()
+                else:
+                    pg.locator(f'.item[data-j="{best[0]}"]').click(); pg.locator(f'.item[data-j="{best[1]}"]').click()
                 pg.locator('#weigh-btn').click(); steps += 1
                 if steps > 20: break
             won = pg.locator('#verdict .won').count() == 1
             print(w, i + 1, 'won' if won else 'LOST', steps)
-            if w == 1100 and i in (5, 8): pg.screenshot(path=f'{OUT}/win{i+1}-{w}.png', full_page=True)
+            if i in (8, 13): pg.screenshot(path=f'{OUT}/win{i+1}-{w}.png', full_page=True)
         # a bad play: level 3, weigh A-B, A-C, A-D, then B-C
         pg.goto(URL + '#3'); pg.reload(); pg.wait_for_timeout(300)
         for a, c in [(0,1),(0,2),(0,3),(1,2),(1,3),(2,3)]:
