@@ -3,9 +3,13 @@ import assert from 'node:assert';
 import { LEVELS, goalOf } from '../src/levels.js';
 import { makeSolver, empty, add, goals, ranks } from '../src/poset.js';
 import { orders } from '../src/imp.js';
+import { makeCoinSolver, start } from '../src/coins.js';
 
 test('budgets are the exact minimum', () => {
-  for (const lv of LEVELS) assert.strictEqual(makeSolver(lv.n, goalOf(lv)).V(empty(lv.n)), lv.budget, lv.id);
+  for (const lv of LEVELS) {
+    const v = lv.kind === 'coins' ? makeCoinSolver(!!lv.coinOnly).V(start(lv.n, lv.opt || {})) : makeSolver(lv.n, goalOf(lv)).V(empty(lv.n));
+    assert.strictEqual(v, lv.budget, lv.id);
+  }
 });
 test('known values', () => {
   const v = (n, g) => makeSolver(n, g).V(empty(n));
@@ -16,4 +20,13 @@ test('known values', () => {
 test('orders counts linear extensions', () => {
   assert.strictEqual(orders(empty(5)), 120);
   assert.strictEqual(orders(add(empty(4), 0, 1)), 12);
+});
+
+test('coin classics', () => {
+  assert.strictEqual(makeCoinSolver(false).V(start(12)), 3);
+  assert.strictEqual(makeCoinSolver(false).V(start(13)), 4);
+  assert.strictEqual(makeCoinSolver(true).V(start(13)), 3);
+  assert.strictEqual(makeCoinSolver(false).V(start(13, { extra: 1 })), 3);
+  assert.strictEqual(makeCoinSolver(false).V(start(27, { heavy: true })), 3);
+  assert.strictEqual(makeCoinSolver(false).V(start(28, { heavy: true })), 4);
 });
