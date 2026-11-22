@@ -21,13 +21,13 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible { outline: 3px s
 .title { margin: 0 0 8px; font-size: 1.45em; }
 .question { font: 600 1.08em/1.45 var(--serif); margin: 0 0 10px; max-width: 680px; }
 .count { display: flex; gap: 4px; align-items: center; margin: 0 0 10px; font-size: 14px; color: var(--muted); flex-wrap: wrap; }
-.count .pip { width: 18px; height: 18px; border-radius: 4px; border: 2px solid #b9ad92; background: #fff; }
+.count .pip { width: 18px; height: 18px; border-radius: 4px; border: 2px solid #94856a; background: #fff; }
 .count .pip.used { background: #3a404c; border-color: #3a404c; }
 .count .lab { margin-left: 8px; }
 .stage { background: #fff; border: 1px solid var(--panel-edge); border-radius: 10px; padding: 10px; }
 svg.board { width: 100%; max-width: 600px; display: block; margin: 0 auto; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
-svg .edge { stroke: #8f96a3; stroke-width: 2.2; stroke-linecap: round; }
-svg .edge.new { stroke: #c98a2b; stroke-width: 4; }
+svg .edge { stroke: #767d8a; stroke-width: 2.2; stroke-linecap: round; }
+svg .edge.new { stroke: #b0721a; stroke-width: 4; }
 svg .item { cursor: pointer; }
 svg .item:focus { outline: none; }
 svg .item .ring { fill: #fff; stroke: #3a404c; stroke-width: 2; }
