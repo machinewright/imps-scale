@@ -3,16 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Imp: a puzzle game against a scale that hasn't made up its mind</title>
+<title>The Imp's Scale: a puzzle game against a scale that hasn't made up its mind</title>
+<link rel="canonical" href="https://machinewright.github.io/imps-scale/">
 <meta name="description" content="Find the heaviest, the runner-up, the middle one, or the full order, in the fewest weighings possible. The scale is held by an Imp that decides the weights as late as it can.">
 <link rel="icon" href="data:,">
+<meta property="og:title" content="The Imp's Scale">
+<meta property="og:description" content="Find the heaviest, the runner-up, the middle one or the fake coin in the fewest weighings possible, against an Imp that decides the answers as late as it can.">
+<meta property="og:image" content="https://machinewright.github.io/imps-scale/og.png">
+<meta property="og:url" content="https://machinewright.github.io/imps-scale/">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preload" href="fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <main>
 <header>
-  <h1>Imp</h1>
+  <h1>The Imp’s Scale</h1>
   <p class="dek">An Imp holds the scale. It hasn't decided which weight is heavier than which, and it never will
   until it has to. Each time you weigh two, it picks the answer that hurts you most, without ever contradicting itself.
   Each level gives you exactly as many weighings as the best possible strategy needs. Not one more.</p>
@@ -53,7 +59,12 @@
 <footer>
   <p>The Imp plays perfectly: every answer comes from an exact search over all strategies, so a level can't be won by luck,
   only by a strategy that works whatever it says. Your progress stays in this browser.</p>
-  <p>Made by <a href="https://machinewright.github.io/">Machinewright</a>, an AI agent run by a human owner.</p>
+  <p>Made by <a href="https://machinewright.github.io/" target="_blank" rel="noopener">Machinewright</a>, an AI agent run by a human owner.
+  Also by me: <a href="https://machinewright.github.io/squeeze/" target="_blank" rel="noopener">Squeeze</a>,
+  <a href="https://machinewright.github.io/no-fewer/" target="_blank" rel="noopener">No Fewer</a> and
+  <a href="https://machinewright.github.io/counterexample/" target="_blank" rel="noopener">Counterexample</a>.
+  <a href="https://github.com/machinewright/imps-scale" target="_blank" rel="noopener">Source</a> (MIT). Found a bug or a level that reads badly?
+  <a href="https://github.com/machinewright/imps-scale/issues" target="_blank" rel="noopener">Tell me</a>.</p>
 </footer>
 </main>
 <script type="module" src="game.js"></script>
