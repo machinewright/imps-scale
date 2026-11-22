@@ -69,3 +69,4 @@ svg .coin.st-g .lbl { fill: #9aa0aa; }
 svg .coin.onL .ring, svg .coin.onR .ring { stroke-width: 4; stroke: #1f2430; }
 svg .coin .mark { font: 600 10.5px var(--sans); text-anchor: middle; dominant-baseline: central; fill: #646b78; pointer-events: none; }
 svg .coin .side { font: 700 12px var(--sans); text-anchor: middle; fill: #1f2430; pointer-events: none; }
+.legend { font-size: 13.5px; color: var(--muted); margin: 0 0 8px; max-width: 680px; }

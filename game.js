@@ -19,6 +19,7 @@ const Weights = {
   ready(st) { return st.sel.length === 2 && !known(st.gt, st.sel[0], st.sel[1]); },
   label(st) { return st.sel.length === 2 ? `Weigh ${NAMES[st.sel[0]]} against ${NAMES[st.sel[1]]}` : 'Weigh'; },
   idle: 'Tap two weights to put them on the scale.',
+  legend: 'Higher row: more weights known to be heavier. A line runs from a heavier weight down to a lighter one; the newest is gold.',
   weigh(st) {
     const [p, q] = st.sel; const pHeavy = imp.answer(st.gt, p, q); const [a, b] = pHeavy ? [p, q] : [q, p];
     return { st: { gt: add(st.gt, a, b), sel: [], lastEdge: [a, b] }, say: `${NAMES[a]} is heavier than ${NAMES[b]}.`,
@@ -37,7 +38,9 @@ const Weights = {
       if (g === 'second' && a === 1 && b === n - 2) out.add(j);
       if (g === 'median' && a === (n - 1) >> 1 && b === (n - 1) >> 1) out.add(j);
       if (g === 'top3' && b >= n - 3) out.add(j);
-      if (g === 'sort') out.add(j); }
+      if (g === 'sort') out.add(j);
+      if (g.startsWith('ranks:') && g.slice(6).split(',').map(Number).some((r) => a === r - 1 && b === n - r)) out.add(j);
+      if (g.startsWith('top:') && b >= n - +g.slice(4)) out.add(j); }
     return out;
   },
   draw(st) {
@@ -94,6 +97,7 @@ const Coins = {
   ready(st) { const [l, r] = this.sides(st); return l.length > 0 && l.length === r.length; },
   label(st) { const [l, r] = this.sides(st); return l.length || r.length ? `Weigh ${l.length} against ${r.length}` : 'Weigh'; },
   idle: 'Tap a coin to put it on the left pan, again for the right pan, a third time to take it off.',
+  legend: '▲ heavy? means that coin can only be the fake if it is heavier; ▼ light? the same for lighter. Genuine coins are grey.',
   weigh(st) {
     const [l, r] = this.sides(st); const o = imp.answer(st.status, st.none, l, r);
     const status = applyOutcome(st.status, l, r, o), none = o === 1 ? st.none : false;
@@ -171,9 +175,9 @@ function load(i) {
   draw();
   setTimeout(() => { if (!imps.has(L.id)) imps.set(L.id, K.makeImp(L)); imp = imps.get(L.id); K.need(cur()); restart(); }, 30);
 }
-function restart() {
-  hist = [{ st: K.init(), need: L.budget }]; over = false;
-  $('verdict').innerHTML = ''; $('log').innerHTML = ''; $('next-btn').hidden = true; $('status').textContent = K.idle; draw();
+function restart(again) {
+  hist = [{ st: K.init(), need: L.budget }]; over = false; $('legend').textContent = K.legend;
+  $('verdict').innerHTML = ''; $('log').innerHTML = ''; $('next-btn').hidden = true; $('status').textContent = again ? 'Fresh start. The Imp may answer differently this time: it only promises the worst for you, not the same answers.' : K.idle; draw();
 }
 function draw() {
   const c = $('count'); c.innerHTML = '';
@@ -214,7 +218,7 @@ function finish(won) {
 window.__state = () => cur();
 window.__best = () => K === Coins ? Coins.bestIdx(cur()) : imp.best(cur().gt).pairs[0];
 $('weigh-btn').onclick = weigh;
-$('restart-btn').onclick = () => imp && restart();
+$('restart-btn').onclick = () => imp && restart(true);
 $('next-btn').onclick = () => load(LEVELS.indexOf(L) + 1);
 $('hint-btn').onclick = () => { const h = $('hint'); h.hidden = !h.hidden; $('hint-btn').setAttribute('aria-expanded', String(!h.hidden)); };
 load(Math.min(LEVELS.length, Math.max(1, parseInt(location.hash.slice(1)) || 1)) - 1);

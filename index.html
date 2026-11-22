@@ -25,6 +25,7 @@
     <h2 id="title" class="title"></h2>
     <p id="ask" class="question"></p>
     <div id="count" class="count" aria-live="polite"></div>
+    <p id="legend" class="legend"></p>
     <div id="stage" class="stage"></div>
     <div class="controls">
       <button id="weigh-btn" class="primary" disabled>Weigh</button>
@@ -40,10 +41,13 @@
 </section>
 
 <section class="how">
-  <h2>How to read the board</h2>
-  <p>A line from a higher weight to a lower one means the higher one is known to be heavier. The row a weight sits in is
-  the number of weights known to be heavier than it, so the top row holds every weight that might still be the heaviest.
-  Tap two weights, then <b>Weigh</b>.</p>
+  <h2>How it works</h2>
+  <p>The Imp has no secret answer. After every weighing it looks at all the ways the weights could still be ordered, and at
+  every strategy you could still follow, and picks the answer that leaves you worst off. So winning a level means having
+  a plan that works whatever it says. Lose, and the game shows the weighing where your plan stopped being safe.</p>
+  <p>The weights board: the row a weight sits in is the number of weights known to be heavier than it, so the top row
+  holds every weight that might still be the heaviest. A line from a higher weight to a lower one means the higher one is
+  known to be heavier.</p>
 </section>
 
 <footer>

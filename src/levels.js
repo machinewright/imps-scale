@@ -56,5 +56,31 @@ export const LEVELS = [
     ask: 'Thirteen suspect coins and one extra coin known to be genuine (14). Find the fake and whether it is heavier or lighter, in 3 weighings.',
     hint: 'The spare lets the first weighing be uneven in suspects: 5 suspects against 4 suspects and the spare.',
     why: 'Without the spare this needs 4 weighings. With it, the first weighing can put 9 suspects on the scale, which is what the count 26 ≤ 27 needs: each outcome must leave at most 9 possibilities.' },
+
+  { id: 'x_r3_6', chapter: 'Expert', title: 'Bronze', n: 6, goal: 'ranks:3', budget: 8,
+    ask: 'Find the third heaviest of six, in 8 weighings.',
+    hint: 'Third of six means exactly two heavier and three lighter. A weight with three known heavier is out, and so is one with four known lighter. Count both directions.',
+    why: 'No textbook formula here: an exhaustive search over every strategy and every answer proves 7 is never enough, and the Imp in this level plays that search.' },
+  { id: 'x_r34_6', chapter: 'Expert', title: 'The two in the middle', n: 6, goal: 'ranks:3,4', budget: 9,
+    ask: 'Find the third and the fourth heaviest of six, in 9 weighings. Sorting all six takes 10, so you can\'t just sort.',
+    hint: 'You never need to know how the top two compare with each other, or the bottom two.',
+    why: 'Sorting needs 10 because there are 720 orders. Here the top pair and the bottom pair may stay unordered, which leaves 4 orders standing at the end. That saves exactly one weighing, as the exhaustive search confirms.' },
+  { id: 'x_t3_7', chapter: 'Expert', title: 'The heavy three', n: 7, goal: 'top:3', budget: 9,
+    ask: 'Pick out the three heaviest of seven (in any order) in 9 weighings.',
+    hint: 'Anything with three known heavier is out for good. Can you make the outs come fast?',
+    why: 'Proved by exhaustive search: 8 weighings never suffice against the Imp.' },
+  { id: 'x_med7', chapter: 'Expert', title: 'Middle of seven', n: 7, goal: 'median', budget: 10,
+    ask: 'Find the middle weight of seven (three heavier, three lighter) in 10 weighings.',
+    hint: 'A weight with four known lighter, or four known heavier, can\'t be the middle one.',
+    why: 'The exhaustive search behind the Imp proves 9 weighings never suffice. With five weights the middle took 6; two more weights cost four more weighings.' },
+  { id: 'x_r14_7', chapter: 'Expert', title: 'Top and middle', n: 7, goal: 'ranks:1,4', budget: 11,
+    ask: 'Find the heaviest and the middle weight of seven, in 11 weighings. The middle alone takes 10.',
+    hint: 'Whatever you do to find the middle one, the heaviest should come out of it almost for free. Almost.',
+    why: 'An exhaustive search proves 10 never suffices: finding the heaviest on top of the middle costs exactly one more weighing.' },
 ];
-export const goalOf = (lv) => lv.goal === 'top3' ? top(3) : goals[lv.goal];
+export const goalOf = (lv) => {
+  if (lv.goal === 'top3') return top(3);
+  if (lv.goal.startsWith('ranks:')) return ranks(lv.goal.slice(6).split(',').map(Number));
+  if (lv.goal.startsWith('top:')) return top(+lv.goal.slice(4));
+  return goals[lv.goal];
+};
