@@ -19,7 +19,7 @@ const Weights = {
   ready(st) { return st.sel.length === 2 && !known(st.gt, st.sel[0], st.sel[1]); },
   label(st) { return st.sel.length === 2 ? `Weigh ${NAMES[st.sel[0]]} against ${NAMES[st.sel[1]]}` : 'Weigh'; },
   idle: 'Tap two weights to put them on the scale.',
-  legend: 'Higher row: more weights known to be heavier. A line runs from a heavier weight down to a lighter one; the newest is gold.',
+  legend: 'Top row: nothing known to be heavier yet; each row down, one more weight known to be heavier. A line runs from a heavier weight down to a lighter one; the newest is gold.',
   weigh(st) {
     const [p, q] = st.sel; const pHeavy = imp.answer(st.gt, p, q); const [a, b] = pHeavy ? [p, q] : [q, p];
     return { st: { gt: add(st.gt, a, b), sel: [], lastEdge: [a, b] }, say: `${NAMES[a]} is heavier than ${NAMES[b]}.`,

@@ -18,10 +18,10 @@ weights could still be in and every plan you could still follow, and gives the a
 without ever contradicting itself. You can't get lucky. You win only with a plan that works whatever it says.
 
 Lose, and the game names the weighing where your plan stopped being safe. Go back to just before it and try again.
-Win, and it shows you how many orders still fit every answer: there never was a hidden one.
+Win a weights level, and it shows you how many orders still fit every answer: there never was a hidden one.
 
 - 20 levels: heaviest, both ends, runner-up (Lewis Carroll's tennis complaint), full order, the middle, fake coins,
-  and an Expert chapter of goals with no textbook answer
+  and an Expert chapter of harder goals
 - Every budget is the exact minimum, computed by exhaustive search, and the Imp plays that search live
 - Mouse, touch and keyboard
 
